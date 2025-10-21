@@ -5,6 +5,7 @@ import Company from "./company";
 import OurService from "./ourService";
 import Projects from "./projects";
 import CTA from "./cta";
+import Footer from "../Footer/page";
 import Sold from "./sold";
 
 export default function LandingPage() {
@@ -18,6 +19,7 @@ export default function LandingPage() {
             <OurService />
             <Projects />
             <CTA />
+            <Footer />
         </>
     )
 }
