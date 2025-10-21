@@ -1,7 +1,17 @@
 
 
 
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Sold() {
+    const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
     const sections = [
         {
             image: "https://img1.wsimg.com/isteam/stock/3395/:/cr=t:11.02%25,l:0%25,w:100%25,h:77.95%25/rs=w:600,h:300,cg:true",
@@ -26,6 +36,40 @@ export default function Sold() {
         }
     ];
 
+    useEffect(() => {
+        // Animate each section independently with floating effect
+        sectionRefs.current.forEach((section, index) => {
+            if (section) {
+                // Set initial state - hidden, scaled down, and positioned below
+                gsap.set(section, { 
+                    opacity: 0, 
+                    y: 80,
+                    scale: 0.95
+                });
+
+                // Create floating animation
+                gsap.to(section, {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 1.2,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 75%',
+                        end: 'top 25%',
+                        scrub: 1,
+                        toggleActions: 'play none none reset',
+                    }
+                });
+            }
+        });
+
+        return () => {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    }, []);
+
     return (
         <div className="relative min-h-screen bg-white py-20 px-8 overflow-hidden">
             <div 
@@ -48,6 +92,9 @@ export default function Sold() {
                 {sections.map((section, index) => (
                     <div 
                         key={index}
+                        ref={(el) => {
+                            sectionRefs.current[index] = el;
+                        }}
                         className={`flex flex-col ${section.position === 'right' ? 'md:flex-row' : 'md:flex-row-reverse'} gap-12 items-center`}
                     >
                         {/* Image with Watermark */}

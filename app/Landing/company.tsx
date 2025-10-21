@@ -1,6 +1,17 @@
 
 "use client";
+
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Company() {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
+    const carouselRef = useRef<HTMLDivElement>(null);
+
     const logos = [
         {
             src: "https://img1.wsimg.com/isteam/ip/067a4d42-19e8-46d9-9bed-578bf62dd44e/BIG%20CIRCLE%202.png/:/rs=h:100,cg:true,m",
@@ -20,8 +31,53 @@ export default function Company() {
         }
     ];
 
+    useEffect(() => {
+        // Set initial state - elements hidden and scaled down
+        gsap.set(titleRef.current, { opacity: 0, scale: 0.8 });
+        gsap.set(carouselRef.current, { opacity: 0, scale: 0.8 });
+
+        // Create animation timeline with scrub
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 80%',
+                end: 'top 30%',
+                scrub: 1,
+                toggleActions: 'play none none reset',
+            }
+        });
+
+        // Animate title - pop up effect
+        tl.to(
+            titleRef.current,
+            { 
+                opacity: 1, 
+                scale: 1,
+                duration: 0.8, 
+                ease: 'back.out(1.7)' // Bouncy pop effect
+            }
+        );
+
+        // Animate carousel - pop up with slight delay
+        tl.to(
+            carouselRef.current,
+            { 
+                opacity: 1, 
+                scale: 1,
+                duration: 0.8, 
+                ease: 'back.out(1.7)'
+            },
+            '-=0.4' // Start 0.4s before previous animation ends
+        );
+
+        return () => {
+            tl.kill();
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    }, []);
+
     return (
-        <div className="relative min-h-[30vh] py-16 px-8 overflow-hidden">
+        <div ref={sectionRef} className="relative min-h-[30vh] py-16 px-8 overflow-hidden">
             <div 
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -40,13 +96,14 @@ export default function Company() {
             
             <div className="relative z-10 max-w-7xl mx-auto">
                 <h3 
+                    ref={titleRef}
                     className="text-center text-3xl mb-12 text-gray-800"
                     style={{ fontFamily: 'var(--font-libre-baskerville), serif', fontWeight: 400 }}
                 >
                     Trusted Partnerships
                 </h3>
                 
-                <div className="relative overflow-hidden">
+                <div ref={carouselRef} className="relative overflow-hidden">
                     <style jsx>{`
                         @keyframes scroll {
                             0% {
