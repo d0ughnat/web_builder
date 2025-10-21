@@ -2,6 +2,8 @@ import Home from "./hero";
 import Header from "../Header/page";
 import About from "./about";
 import Company from "./company";
+import OurService from "./ourService";
+import Sold from "./sold";
 
 export default function LandingPage() {
     return (
@@ -10,6 +12,8 @@ export default function LandingPage() {
             <Home />
             <About />
             <Company />
+            <Sold />
+            <OurService />
         </>
     )
 }
