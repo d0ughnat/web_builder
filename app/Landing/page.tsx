@@ -3,6 +3,7 @@ import Header from "../Header/page";
 import About from "./about";
 import Company from "./company";
 import OurService from "./ourService";
+import Projects from "./projects";
 import Sold from "./sold";
 
 export default function LandingPage() {
@@ -14,6 +15,7 @@ export default function LandingPage() {
             <Company />
             <Sold />
             <OurService />
+            <Projects />
         </>
     )
 }
