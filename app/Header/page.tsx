@@ -51,24 +51,26 @@ export default function Header() {
         >
             <div className="container mx-auto px-8 py-6 flex justify-between items-center">
                 <div className="flex items-center">
-                    <img 
-                        src="https://img1.wsimg.com/isteam/ip/067a4d42-19e8-46d9-9bed-578bf62dd44e/blob-6c0c2e0.png/:/rs=h:167,cg:true,m/qt=q:95"
-                        alt="Pahrump Realty Logo"
-                        className="h-16"
-                        style={{ filter: 'brightness(0) invert(1)' }}
-                    />
+                    <a href="/">
+                        <img 
+                            src="https://img1.wsimg.com/isteam/ip/067a4d42-19e8-46d9-9bed-578bf62dd44e/blob-6c0c2e0.png/:/rs=h:167,cg:true,m/qt=q:95"
+                            alt="Pahrump Realty Logo"
+                            className="h-16 cursor-pointer hover:opacity-80 transition-opacity duration-300"
+                            style={{ filter: 'brightness(0) invert(1)' }}
+                        />
+                    </a>
                 </div>
                 
                 <nav className="flex space-x-8 items-center">
                     <a 
-                        href="#contact" 
+                        href="/Contact" 
                         className="text-white hover:text-gray-200 transition-colors text-lg font-normal"
                         style={{ fontFamily: 'var(--font-libre-franklin), sans-serif', fontWeight: 400 }}
                     >
                         Contact Us
                     </a>
                     <a 
-                        href="#available" 
+                        href="/Listing" 
                         className="text-white transition-colors text-lg font-normal border border-white px-4 py-2 rounded-3xl hover:bg-white hover:text-black"
                         style={{ fontFamily: 'var(--font-libre-franklin), sans-serif', fontWeight: 400 }}
                     >
